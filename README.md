@@ -38,7 +38,7 @@ If anything my **top priority** is improving the code itself so I can make the O
 
 ### What is not going to be implemented in the future
 
-There are two primary things I won't include to this OS of mine, that is making it 32 or 64bit, the second thing is any networking except for maybe a crossover ethernet cable so that two computer with this OS installed can communicate to each other although that is **very** unlikely because let's be honest with ourselves, who is going to run this OS to more than one computer ?
+There are two primary things I won't include to this OS of mine, that is making it 32 or 64bit because there is no reason to do that, I can't really use that much computing power. The second thing is any networking except for maybe a crossover ethernet cable so that two computer with this OS installed can communicate to each other although that is **very** unlikely because let's be honest with ourselves, who is going to run this OS to more than one computer ?
 
 <br>
 
