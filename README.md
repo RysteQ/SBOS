@@ -8,6 +8,8 @@
 
 ---
 
+<br>
+
 ### The why
 
 So, I have a professor in my university that is responsible to teach me and the rest of the class about operating systems and I really liked the subject and I still do. Now you see, I failed to get a passing grade, **alongside the  80% of the class**, so I decided to make this operating system as a gift to my professor and because I really like low level programming. Also, I do not hate the professor, if anything I really like his lessons although I still feel a bit sour about the grade I got.
