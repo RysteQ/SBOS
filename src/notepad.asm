@@ -1,5 +1,30 @@
 notepad:
-    pusha
+    edit_existing_note:
+        pusha
+
+        ; put a null terminator at the end of the buffer
+        call select_notepad_buffer
+        mov ax, word NOTEPAD_INPUT_BUFFER_SIZE
+        dec ax
+        add si, ax
+        mov [si], byte NULL_TERMINATOR
+
+        ; display the current note
+        call select_notepad_buffer
+        call print_si
+
+        ; prepare some values for future use
+        call select_notepad_buffer
+        mov [cursor_x_pos], byte 0
+        mov [cursor_y_pos], byte 0
+
+        ; move the cursor at the top right of the screen
+        mov ah, 0x02
+        mov dx, word 0
+        mov bh, byte 0
+        int 0x10
+
+        jmp notepad_get_char
 
     clear_notepad_buffer:
         ; prepare some registers
@@ -35,31 +60,6 @@ notepad:
             mov [si], byte NULL_TERMINATOR
 
             ret
-
-    edit_existing_note:
-        ; put a null terminator at the end of the buffer
-        call select_notepad_buffer
-        mov ax, word NOTEPAD_INPUT_BUFFER_SIZE
-        dec ax
-        add si, ax
-        mov [si], byte NULL_TERMINATOR
-
-        ; display the current note
-        call select_notepad_buffer
-        call print_si
-
-        ; prepare some values for future use
-        call select_notepad_buffer
-        mov [cursor_x_pos], byte 0
-        mov [cursor_y_pos], byte 0
-
-        ; move the cursor at the top right of the screen
-        mov ah, 0x02
-        mov dx, word 0
-        mov bh, byte 0
-        int 0x10
-
-        jmp notepad_get_char
 
     select_notepad_buffer:
         ; check which buffer the user selected
@@ -237,8 +237,8 @@ notepad:
         int 0x10
 
         ; delete the character from the string
-        mov [si], byte SPACE
         dec si
+        mov [si], byte EMPTY_CHARACTER
 
         ; go back to the main sub routine
         jmp notepad_get_char
@@ -249,18 +249,19 @@ notepad:
             je notepad_get_char
 
             ; update the cursor position
+            mov [cursor_x_pos], byte MAXIMUM_X_POS
             dec byte [cursor_y_pos]
 
             ; move the cursor accordingly
             mov ah, 0x02
-            mov dh, byte MAXIMUM_X_POS
-            mov dl, byte [cursor_y_pos]
+            mov dh, byte [cursor_y_pos]
+            mov dl, byte MAXIMUM_X_POS
             mov bh, 0
             int 0x10
 
             ; update the string index register
-            mov [si], byte BACKSPACE
             dec si
+            mov [si], byte EMPTY_CHARACTER
 
             ; go back to the main sub routine
             jmp notepad_get_char
@@ -272,7 +273,7 @@ notepad:
 
         ; update the cursor positions
         inc byte [cursor_y_pos]
-        mov [si], byte SPACE
+        mov [si], byte EMPTY_CHARACTER
 
         ; go to the next line
         mov ah, 0x0e
@@ -287,6 +288,7 @@ notepad:
         sub si, word ax
         add si, word MAXIMUM_X_POS
         inc si
+        mov [si], byte EMPTY_CHARACTER
         
         ; update the cursor x position
         mov [cursor_x_pos], byte 0
@@ -301,7 +303,7 @@ notepad:
 
         ; update the cursor positions
         inc byte [cursor_y_pos]
-        mov [si], byte SPACE
+        mov [si], byte EMPTY_CHARACTER
 
         ; update the string index
         xor ax, ax

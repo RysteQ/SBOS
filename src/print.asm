@@ -6,11 +6,11 @@ print_si:
 
     print_char:
         ; check if we have reached the end if the string
-        cmp al, byte 0
+        cmp al, byte NULL_TERMINATOR
         je exit_print_si
 
         ; check for a \n character
-        cmp al, byte 10
+        cmp al, byte NEW_LINE
         je print_new_line
 
         ; print the character

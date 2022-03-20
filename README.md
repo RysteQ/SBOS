@@ -10,13 +10,13 @@
 
 <br>
 
-### The why
+## The why
 
 So, I have a professor in my university that is responsible to teach me and the rest of the class about operating systems and I really liked the subject and I still do. Now you see, I failed to get a passing grade, **alongside the  80% of the class**, so I decided to make this operating system as a gift to my professor and because I really like low level programming. Also, I do not hate the professor, if anything I really like his lessons although I still feel a bit sour about the grade I got.
 
 <br>
 
-### How to run on a linux machine
+## How to run on a linux machine
 
 To run the OS under an emulator you will need [Qemu](https://www.qemu.org/) and [nasm](https://www.nasm.us/), after you have those installed on your linux machine just use the make.sh file I included in the repository by typing the following command
 
@@ -26,7 +26,7 @@ To run the OS under an emulator you will need [Qemu](https://www.qemu.org/) and 
 
 <br>
 
-### Future plans
+## Future plans
 
 I plan on improving the OS as much as I can with my limited knowledge and my depleting sanity, that includes:
 
@@ -38,7 +38,7 @@ If anything my **top priority** is improving the code itself so I can make the O
 
 <br>
 
-### What is not going to be implemented in the future
+## What is not going to be implemented in the future
 
 There are two primary things I won't include to this OS of mine, that is making it 32 or 64bit because there is no reason to do that, I can't really use that much computing power. The second thing is any networking except for maybe a crossover ethernet cable so that two computer with this OS installed can communicate to each other although that is **very** unlikely because let's be honest with ourselves, who is going to run this OS to more than one computer ?
 
@@ -46,4 +46,4 @@ There are two primary things I won't include to this OS of mine, that is making 
 
 ---
 
-*Current version: 1.0.0*
+*Current version: 1.0.1*

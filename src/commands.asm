@@ -25,10 +25,10 @@ command_line_si:
 
         ; check if the input is equal to the start notepad command
         mov si, input_buffer
-        mov di, COMMAND_START_NOTEPAD
+        mov di, COMMAND_DELETE_NOTE
         call compare_si_di_strings
         cmp [equal], byte TRUE
-        je execute_command_start_notepad
+        je execute_command_delete_note
 
         ; check if the input is equal to the display notes command
         mov si, input_buffer
@@ -109,7 +109,7 @@ command_line_si:
         mov si, COMMAND_DISPLAY_HELP
         call print_si
         call new_line
-        mov si, COMMAND_START_NOTEPAD
+        mov si, COMMAND_DELETE_NOTE
         call print_si
         call new_line
         mov si, COMMAND_EDIT_NOTE
@@ -127,8 +127,8 @@ command_line_si:
         ; exit the sub routine
         jmp exit_command_line
 
-    execute_command_start_notepad:
-        ; ask the user which note they want to use
+    execute_command_delete_note:
+        ; ask the user which note they want to delete
         mov si, NOTEPAD_AVAILABLE_NOTES
         call print_si
 
@@ -140,7 +140,7 @@ command_line_si:
 
         ; check if the note the user selected is within bounds
         cmp cl, byte 2
-        jg execute_command_start_notepad
+        jg execute_command_delete_note
         mov [selected_notepad_buffer], byte cl
 
         call clear_notepad_buffer
@@ -182,6 +182,7 @@ command_line_si:
             ; print the selected input buffer
             call clear_screen
             call print_si
+            jmp $
             call new_line
         
         ; exit the sub routine
@@ -210,7 +211,9 @@ command_line_si:
         mov bl, byte [COLOUR_CURRENT_COLOUR]
         int 0x10
 
-        jmp edit_existing_note
+        call edit_existing_note
+
+        jmp exit_command_line
 
     execute_bf_interpreter:
         ; print to the user the available options
@@ -275,7 +278,7 @@ selected_note: db 0
 COMMAND_CLEAR_SCREEN: db "clear", NULL_TERMINATOR
 COMMAND_CHANGE_BODY_COLOUR: db "set bgcolour", NULL_TERMINATOR
 COMMAND_DISPLAY_HELP: db "help", NULL_TERMINATOR
-COMMAND_START_NOTEPAD: db "delete note", NULL_TERMINATOR
+COMMAND_DELETE_NOTE: db "delete note", NULL_TERMINATOR
 COMMAND_DISPLAY_NOTES: db "show note", NULL_TERMINATOR
 COMMAND_EDIT_NOTE: db "edit note", NULL_TERMINATOR
 COMMAND_BF_INTERPRETER: db "run bfi", NULL_TERMINATOR
