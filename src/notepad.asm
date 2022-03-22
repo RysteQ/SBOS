@@ -82,6 +82,8 @@ notepad:
             ret
 
     notepad_get_char:
+        call notepad_row_and_column_information
+
         ; get the input from the user
         mov ah, byte 0x00
         int 0x16
@@ -111,6 +113,10 @@ notepad:
         cmp ah, byte RIGHT_ARROW_ASCII_CODE
         je notepad_right_arrow
 
+        ; check if the input is valid
+        cmp [cursor_x_pos], byte MAXIMUM_X_POS
+        jg notepad_next_line
+
         ; display the character back to the user
         mov ah, byte 0x0e
         int 0x10
@@ -121,9 +127,6 @@ notepad:
 
         ; update the cursor positions
         inc byte [cursor_x_pos]
-
-        cmp [cursor_x_pos], byte MAXIMUM_X_POS
-        jg notepad_next_line
 
         ; repeat
         jmp notepad_get_char
@@ -359,6 +362,70 @@ notepad:
             sub [cursor_x_pos], byte NOTEPAD_TAB_SPACES
             jmp notepad_get_char
 
+    notepad_row_and_column_information:
+        pusha
+
+        ; move the cursor at the last line and first columb of the screen
+        mov ah, byte 0x02
+        mov dl, byte 0
+        mov dh, byte 23
+        mov bh, byte 0
+        int 0x10
+
+        mov si, notepad_column_message
+        call print_si
+
+        ; calculate the ASCII characters for the cursor x position
+        xor ax, ax
+        xor cx, cx
+        mov al, byte [cursor_x_pos]
+        mov cl, byte 10
+        div cl
+
+        add al, byte 48
+        add ah, byte 48
+        mov cx, word ax
+
+        ; display the cursor x position
+        mov ah, byte 0x0e
+        mov al, byte cl
+        int 0x10
+        mov al, byte ch
+        int 0x10
+        mov al, byte SPACE
+        int 0x10
+
+        mov si, notepad_row_message
+        call print_si
+
+        ; calculate the ASCII characters for the cursor y position
+        xor ax, ax
+        xor cx, cx
+        mov al, byte [cursor_y_pos]
+        mov cl, byte 10
+        div cl
+
+        add al, byte 48
+        add ah, byte 48
+        mov cx, word ax
+
+        ; display the cursor y position
+        mov ah, byte 0x0e
+        mov al, byte cl
+        int 0x10
+        mov al, byte ch
+        int 0x10
+
+        ; move the cursor where it was earlier
+        mov ah, byte 0x02
+        mov dl, byte [cursor_x_pos]
+        mov dh, byte [cursor_y_pos]
+        mov bh, byte 0
+        int 0x10
+
+        popa
+        ret
+
     exit_notepad:
         ; put the null terminator at the end of the buffer
         call select_notepad_buffer
@@ -371,9 +438,11 @@ notepad:
         popa
         ret
 
-notepad_input_buffer: times 1856 db 0xff
-notepad_input_buffer_two: times 1856 db 0xff
-notepad_input_buffer_three: times 1856 db 0xff
+notepad_input_buffer: times 1841 db EMPTY_CHARACTER
+notepad_input_buffer_two: times 1841 db EMPTY_CHARACTER
+notepad_input_buffer_three: times 1841 db EMPTY_CHARACTER
+notepad_column_message: db "Column: ", NULL_TERMINATOR
+notepad_row_message: db "Row: ", NULL_TERMINATOR
 selected_notepad_buffer: db 0
 cursor_x_pos: db 0
 cursor_y_pos: db 0
