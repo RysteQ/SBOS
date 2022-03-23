@@ -48,7 +48,7 @@ notepad:
             jmp clear_notepad_input_buffer_memory
 
         clear_notepad_input_buffer_memory:
-            mov [si], byte SPACE
+            mov [si], byte EMPTY_CHARACTER
 
             inc si
             dec ax
@@ -82,6 +82,8 @@ notepad:
             ret
 
     notepad_get_char:
+        call notepad_row_and_column_information
+
         ; get the input from the user
         mov ah, byte 0x00
         int 0x16
@@ -111,19 +113,21 @@ notepad:
         cmp ah, byte RIGHT_ARROW_ASCII_CODE
         je notepad_right_arrow
 
+        ; check if the input is valid
+        cmp [cursor_x_pos], byte MAXIMUM_X_POS
+        jg notepad_next_line
+
         ; display the character back to the user
         mov ah, byte 0x0e
         int 0x10
 
         ; save the character to the si register
+        call notepad_input_buffer_overlap_check
         mov [si], byte al
         inc si
 
         ; update the cursor positions
         inc byte [cursor_x_pos]
-
-        cmp [cursor_x_pos], byte MAXIMUM_X_POS
-        jg notepad_next_line
 
         ; repeat
         jmp notepad_get_char
@@ -359,6 +363,139 @@ notepad:
             sub [cursor_x_pos], byte NOTEPAD_TAB_SPACES
             jmp notepad_get_char
 
+    notepad_row_and_column_information:
+        pusha
+
+        ; move the cursor at the last line and first columb of the screen
+        mov ah, byte 0x02
+        mov dl, byte 0
+        mov dh, byte 23
+        mov bh, byte 0
+        int 0x10
+
+        mov si, notepad_column_message
+        call print_si
+
+        ; calculate the ASCII characters for the cursor x position
+        xor ax, ax
+        xor cx, cx
+        mov al, byte [cursor_x_pos]
+        mov cl, byte 10
+        div cl
+
+        add al, byte 48
+        add ah, byte 48
+        mov cx, word ax
+
+        ; display the cursor x position
+        mov ah, byte 0x0e
+        mov al, byte cl
+        int 0x10
+        mov al, byte ch
+        int 0x10
+        mov al, byte SPACE
+        int 0x10
+
+        mov si, notepad_row_message
+        call print_si
+
+        ; calculate the ASCII characters for the cursor y position
+        xor ax, ax
+        xor cx, cx
+        mov al, byte [cursor_y_pos]
+        mov cl, byte 10
+        div cl
+
+        add al, byte 48
+        add ah, byte 48
+        mov cx, word ax
+
+        ; display the cursor y position
+        mov ah, byte 0x0e
+        mov al, byte cl
+        int 0x10
+        mov al, byte ch
+        int 0x10
+
+        ; move the cursor where it was earlier
+        mov ah, byte 0x02
+        mov dl, byte [cursor_x_pos]
+        mov dh, byte [cursor_y_pos]
+        mov bh, byte 0
+        int 0x10
+
+        popa
+        ret
+
+    notepad_input_buffer_overlap_check:
+        pusha
+
+        ; check if the is anything to mov
+        cmp [si], byte EMPTY_CHARACTER
+        je notepad_input_buffer_overlap_check_return_skip
+
+        push word ax
+
+        ; calculate how many bytes need to be moved
+        xor ax, ax
+        mov ah, byte [cursor_y_pos]
+        mov cl, byte MAXIMUM_X_POS
+        inc cl
+        mul cl
+
+        xor cx, cx
+        mov cl, byte [cursor_x_pos]
+        add ax, word cx
+
+        call select_notepad_buffer
+        mov cx, word ax
+        mov ax, word 0
+
+        ; find the end of the used buffer
+        notepad_input_buffer_overlap_check_find_end_of_buffer:
+            inc si
+            inc ax
+
+            cmp [si], byte EMPTY_CHARACTER
+            jne notepad_input_buffer_overlap_check_find_end_of_buffer
+
+        sub ax, cx
+        inc ax
+
+        notepad_input_buffer_overlap_check_move_buffer:
+            ; move one byte at a time from the end of the buffer
+            mov cl, byte [si]
+            inc si
+            mov [si], byte cl
+            sub si, byte 2
+
+            dec ax
+
+            cmp ax, word 0
+            jne notepad_input_buffer_overlap_check_move_buffer
+
+        notepad_input_buffer_overlap_check_return:
+            ; update the screen
+            call clear_screen
+            call select_notepad_buffer
+            call print_si
+
+            ; move the cursor back to where it was
+            mov ah, byte 0x02
+            mov dh, byte [cursor_y_pos]
+            mov dl, byte [cursor_x_pos]
+            mov bh, byte 0
+            int 0x10
+            
+            ; print the character the user entered ages ago
+            pop ax
+            mov ah, byte 0x0e
+            int 0x10
+
+            notepad_input_buffer_overlap_check_return_skip:
+                popa
+                ret
+
     exit_notepad:
         ; put the null terminator at the end of the buffer
         call select_notepad_buffer
@@ -371,14 +508,16 @@ notepad:
         popa
         ret
 
-notepad_input_buffer: times 1856 db 0xff
-notepad_input_buffer_two: times 1856 db 0xff
-notepad_input_buffer_three: times 1856 db 0xff
+notepad_input_buffer: times 1841 db EMPTY_CHARACTER
+notepad_input_buffer_two: times 1841 db EMPTY_CHARACTER
+notepad_input_buffer_three: times 1841 db EMPTY_CHARACTER
+notepad_column_message: db "Column: ", NULL_TERMINATOR
+notepad_row_message: db "Row: ", NULL_TERMINATOR
 selected_notepad_buffer: db 0
 cursor_x_pos: db 0
 cursor_y_pos: db 0
 
 NOTEPAD_TAB_SPACES equ 4
-NOTEPAD_INPUT_BUFFER_SIZE equ 1856
+NOTEPAD_INPUT_BUFFER_SIZE equ 1841
 MAXIMUM_X_POS equ 79
 MAXIMUM_Y_POS equ 22

@@ -182,7 +182,6 @@ command_line_si:
             ; print the selected input buffer
             call clear_screen
             call print_si
-            jmp $
             call new_line
         
         ; exit the sub routine
