@@ -14,6 +14,8 @@
 
 So, I have a professor in my university that is responsible to teach me and the rest of the class about operating systems and I really liked the subject and I still do. Now you see, I failed to get a passing grade, **alongside the  80% of the class**, so I decided to make this operating system as a gift to my professor and because I really like low level programming. Also, I do not hate the professor, if anything I really like his lessons although I still feel a bit sour about the grade I got.
 
+Now let me say this, this small project of mine should not be taken seriously at all, I am someone who knows very few things in assembly and how to write a bootloader. I made this because I wanted to, not because it has some meaning to anyone else other than me.
+
 <br>
 
 ## How to run on a linux machine
@@ -46,4 +48,4 @@ There are two primary things I won't include to this OS of mine, that is making 
 
 ---
 
-*Current version: 1.0.2*
+*Current version: 1.0.3*
