@@ -5,6 +5,7 @@
 2. **[How to run on a linux machine](#how-to-run-on-a-linux-machine)**
 3. **[Future plans](#future-plans)**
 4. **[What is not going to be implemented in the future](#what-is-not-going-to-be-implemented-in-the-future)**
+5. **[Current bugs](#current-bugs)**
 
 ---
 
@@ -43,6 +44,13 @@ If anything my **top priority** is improving the code itself so I can make the O
 ## What is not going to be implemented in the future
 
 There are two primary things I won't include to this OS of mine, that is making it 32 or 64bit because there is no reason to do that, I can't really use that much computing power. The second thing is any networking except for maybe a crossover ethernet cable so that two computer with this OS installed can communicate to each other although that is **very** unlikely because let's be honest with ourselves, who is going to run this OS to more than one computer ?
+
+<br>
+
+## Current bugs
+
+1. There is a bug when you press a character on a line that's not the first line where if you type something over an existing character it will just freeze the OS
+2. Maybe something in the brainfuck interpreter, I am not sure since I haven't tested it that much, I will test it more once I gather the willpower
 
 <br>
 
