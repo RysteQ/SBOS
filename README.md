@@ -46,4 +46,4 @@ There are two primary things I won't include to this OS of mine, that is making 
 
 ---
 
-*Current version: 1.0.1*
+*Current version: 1.0.2*
