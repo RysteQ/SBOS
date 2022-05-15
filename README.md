@@ -33,9 +33,10 @@ To run the OS under an emulator you will need [Qemu](https://www.qemu.org/) and 
 
 I plan on improving the OS as much as I can with my limited knowledge and my depleting sanity, that includes:
 
-1. Restructuring the code to make it easier to read
-2. Improving the code
-3. Adding new features
+1. ~~Restructuring the code to make it easier to read~~
+2. ~~Improving the code~~
+3. ~~Adding new features~~
+4. Fixing the notepad application so it works properly
 
 If anything my **top priority** is improving the code itself so I can make the OS smaller in size and making it more readable, after that is done I will improve the notepad application to make it more user friendly and only then I will focus on adding new features to the operating system itself.
 
