@@ -1,7 +1,12 @@
 new_line:
-    mov ah, 0x0e
-    mov al, byte 10
+    pusha
+
+    ; print a new line and the carriange return
+    mov ah, byte 0x0e
+    mov al, byte NEW_LINE
     int 0x10
-    mov al, byte 13
+    mov al, byte CARRIAGE_RETURN
     int 0x10
+
+    popa
     ret
