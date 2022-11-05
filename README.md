@@ -1,15 +1,18 @@
 # SBOS
 
 **Table of contents**
-1. **[Why ?](#the-why)**
-2. **[How to run on a linux machine](#how-to-run-on-a-linux-machine)**
-3. **[Future plans](#future-plans)**
-4. **[What is not going to be implemented in the future](#what-is-not-going-to-be-implemented-in-the-future)**
-5. **[Current bugs](#current-bugs)**
+1. **[Introduction](#introduction)**
+2. **[Why ?](#the-why)**
+3. **[How to run on a linux machine](#how-to-run-on-a-linux-machine)**
+4. **[Current plan](#current-plans)**
 
 ---
 
 <br>
+
+## Introduction
+
+SBOS (**S**imple **B**asic **O**perating **S**ystem) is a **16 bit** OS *(if you want to call it that, I personally avoid use the term OS)* written **purely in x86** assembly. This is just a fun project for me and I hope you like it as well or even better inspire you to do the same and write your own small 16 bit operating system from scratch, that would be amazing.
 
 ## The why
 
@@ -29,32 +32,12 @@ To run the OS under an emulator you will need [Qemu](https://www.qemu.org/) and 
 
 <br>
 
-## Future plans
+## Current plan
 
-I plan on improving the OS as much as I can with my limited knowledge and my depleting sanity, that includes:
+My current plan is to **rewrite** SBOS from the ground up to make it much more friendlier to the user and to me as it's maintainer. I also want to add a way to program in it (besides the brainfuck interpreter) although I still don't know how I will do that exactly. Maybe a very small custom programming language although this is just a thought that just popped into my mind while writing this.
 
-1. ~~Restructuring the code to make it easier to read~~
-2. ~~Improving the code~~
-3. ~~Adding new features~~
-4. Fixing the notepad application so it works properly
-
-If anything my **top priority** is improving the code itself so I can make the OS smaller in size and making it more readable, after that is done I will improve the notepad application to make it more user friendly and only then I will focus on adding new features to the operating system itself.
-
-<br>
-
-## What is not going to be implemented in the future
-
-There are two primary things I won't include to this OS of mine, that is making it 32 or 64bit because there is no reason to do that, I can't really use that much computing power. The second thing is any networking except for maybe a crossover ethernet cable so that two computer with this OS installed can communicate to each other although that is **very** unlikely because let's be honest with ourselves, who is going to run this OS to more than one computer ?
-
-<br>
-
-## Current bugs
-
-1. There is a bug when you press a character on a line that's not the first line where if you type something over an existing character it will just freeze the OS
-2. Maybe something in the brainfuck interpreter, I am not sure since I haven't tested it that much, I will test it more once I gather the willpower
-
-<br>
+A big addition coming to SBOS (if all goes well) will be directories and files, I plan on making it possible to save data to the disk so you can retrieve said data for later use.
 
 ---
 
-*Current version: 1.0.3*
+*Current version: 1.0.4*
