@@ -4,7 +4,6 @@
 1. **[Introduction](#introduction)**
 2. **[Why ?](#the-why)**
 3. **[How to run on a linux machine](#how-to-run-on-a-linux-machine)**
-4. **[Current plan](#current-plans)**
 
 ---
 
@@ -13,6 +12,8 @@
 ## Introduction
 
 SBOS (**S**imple **B**asic **O**perating **S**ystem) is a **16 bit** OS *(if you want to call it that, I personally avoid use the term OS)* written **purely in x86** assembly. This is just a fun project for me and I hope you like it as well or even better inspire you to do the same and write your own small 16 bit operating system from scratch, that would be amazing.
+
+This project is no longer maintained.
 
 ## The why
 
@@ -29,11 +30,3 @@ To run the OS under an emulator you will need [Qemu](https://www.qemu.org/) and 
 ```
 > bash make.sh
 ```
-
-<br>
-
-## Current plan
-
-My current plan is to **rewrite** SBOS from the ground up to make it much more friendlier to the user and to me as it's maintainer. I also want to add a way to program in it (besides the brainfuck interpreter) although I still don't know how I will do that exactly. Maybe a very small custom programming language although this is just a thought that just popped into my mind while writing this.
-
-A big addition coming to SBOS (if all goes well) will be directories and files, I plan on making it possible to save data to the disk so you can retrieve said data for later use.
