@@ -45,6 +45,8 @@ help_command_label:
     call print_si
     call new_line
 
+    call new_line
+
     jmp check_command_exit
 
 notepad_command_label:

@@ -18,7 +18,7 @@ main_loop:
 
     jmp main_loop
 
-welcome_message: db "Welcome to SBOS", NEW_LINE, "For help type help", NEW_LINE, NULL_TERMINATOR, NEW_LINE, NEW_LINE
+welcome_message: db "Welcome to SBOS", NEW_LINE, "For help type help", NEW_LINE, NEW_LINE, NULL_TERMINATOR
 command_prompt: db "Command -> ", NULL_TERMINATOR
 
 %include "print_si.asm"
