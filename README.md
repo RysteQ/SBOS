@@ -37,7 +37,3 @@ To run the OS under an emulator you will need [Qemu](https://www.qemu.org/) and 
 My current plan is to **rewrite** SBOS from the ground up to make it much more friendlier to the user and to me as it's maintainer. I also want to add a way to program in it (besides the brainfuck interpreter) although I still don't know how I will do that exactly. Maybe a very small custom programming language although this is just a thought that just popped into my mind while writing this.
 
 A big addition coming to SBOS (if all goes well) will be directories and files, I plan on making it possible to save data to the disk so you can retrieve said data for later use.
-
----
-
-*Current version: 1.0.4*
