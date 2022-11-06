@@ -26,6 +26,11 @@ check_command:
     cmp [si_di_strings_equal], byte TRUE
     je clear_note_label
 
+    mov di, copy_note_command
+    call compare_si_di
+    cmp [si_di_strings_equal], byte TRUE
+    je copy_note_label
+
     jmp unknown_command
 
     check_command_exit:
@@ -54,6 +59,10 @@ help_command_label:
     call print_si
     call new_line
 
+    mov si, copy_note_command
+    call print_si
+    call new_line
+
     call new_line
 
     jmp check_command_exit
@@ -74,6 +83,10 @@ clear_note_label:
     call clear_note
     jmp check_command_exit
 
+copy_note_label:
+    call copy_note
+    jmp check_command_exit
+
 unknown_command:
     mov si, unknown_command_message_start
     call print_si
@@ -91,6 +104,7 @@ notepad_command: db "notepad", NULL_TERMINATOR
 clear_screen_command: db "clear", NULL_TERMINATOR
 brainfuck_command: db "brainfuck", NULL_TERMINATOR
 clear_note_command: db "clear note", NULL_TERMINATOR
+copy_note_command: db "copy note", NULL_TERMINATOR
 
 unknown_command_message_start: db "Unknown command ", NULL_TERMINATOR
 unknown_command_message_end: db "Type help to display all available commands", NEW_LINE, NULL_TERMINATOR

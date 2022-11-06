@@ -30,6 +30,7 @@ command_prompt: db "Command -> ", NULL_TERMINATOR
 %include "notepad.asm"
 %include "brainfuck.asm"
 %include "clear_note.asm"
+%include "copy_note.asm"
 
 NULL_TERMINATOR equ 0
 NEW_LINE equ 10

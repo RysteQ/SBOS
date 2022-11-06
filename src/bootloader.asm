@@ -16,4 +16,4 @@ jmp 0x7e00
 times 510 - ($ - $$) db 0
 dw 0xaa55
 
-SECTORS_TO_READ equ 15
+SECTORS_TO_READ equ 16
