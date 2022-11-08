@@ -11,7 +11,7 @@
 
 ## Introduction
 
-SBOS (**S**imple **B**asic **O**perating **S**ystem) is a **16 bit** OS *(if you want to call it that, I personally avoid use the term OS)* written **purely in x86** assembly. This is just a fun project for me and I hope you like it as well or even better inspire you to do the same and write your own small 16 bit operating system from scratch, that would be amazing.
+SBOS (**S**imple **B**asic **O**perating **S**ystem) is a **16 bit** OS *(if you want to call it that, I personally avoid using the term OS when talking about this project)* written **purely in x86** assembly. This is just a fun project for me and I hope you like it as well or even better inspire you to do the same and write your own small 16 bit operating system from scratch, that would be amazing.
 
 This project is no longer maintained.
 
